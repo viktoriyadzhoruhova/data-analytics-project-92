@@ -40,6 +40,6 @@ select
 from sales s
 inner join employees e on s.sales_person_id = e.employee_id
 inner join products p on s.product_id = p.product_id
-group by seller, day_of_week
-order by seller asc;
+group by seller, day_of_week, TO_CHAR(s.sale_date, 'ID')
+order by seller, TO_CHAR(s.sale_date, 'ID') ASC;
 	

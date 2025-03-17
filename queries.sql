@@ -33,24 +33,15 @@ where a.average_income < (select FLOOR(AVG(average_income)) from average_sales)
 order by a.average_income;
 
 -- Sales by each seller and day of week
-SELECT
-    e.first_name || ' ' || e.last_name AS seller,
-    TRIM(TO_CHAR(s.sale_date, 'Day')) AS day_of_week,
+select
+    e.first_name || ' ' || e.last_name as seller,
+    TRIM(TO_CHAR(s.sale_date, 'Day')) as day_of_week,
     FLOOR(SUM(p.price * s.quantity)) AS income
-FROM sales s
-INNER JOIN employees e ON s.sales_person_id = e.employee_id
-INNER JOIN products p ON s.product_id = p.product_id
-GROUP BY seller, day_of_week, TO_CHAR(s.sale_date, 'ID')
-ORDER BY seller, 
-    CASE 
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Monday' THEN 1
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Tuesday' THEN 2
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Wednesday' THEN 3
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Thursday' THEN 4
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Friday' THEN 5
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Saturday' THEN 6
-        WHEN TO_CHAR(s.sale_date, 'Day') = 'Sunday' THEN 7
-    END ASC;
+from sales s
+inner join employees e on s.sales_person_id = e.employee_id
+inner join products p on s.product_id = p.product_id
+group by seller, day_of_week, TO_CHAR(s.sale_date, 'ID')
+order by seller, TO_CHAR(s.sale_date, 'ID') ASC;
 
 -- Customers groups by age
 select 

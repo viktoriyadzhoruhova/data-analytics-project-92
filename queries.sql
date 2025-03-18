@@ -35,13 +35,13 @@ order by a.average_income;
 -- Sales by each seller and day of week
 select
     e.first_name || ' ' || e.last_name as seller,
-    INITCAP(TRIM(TO_CHAR(s.sale_date, 'Day'))) AS day_of_week,
-    FLOOR(SUM(p.price * s.quantity)) AS income
+    INITCAP(TRIM(TO_CHAR(s.sale_date, 'Day'))) as day_of_week,
+    FLOOR(SUM(p.price * s.quantity)) as income
 from sales s
 inner join employees e on s.sales_person_id = e.employee_id
 inner join products p on s.product_id = p.product_id
-group by seller, day_of_week, EXTRACT(DOW FROM s.sale_date)
-order by seller, EXTRACT(DOW FROM s.sale_date) ASC;
+group by seller, day_of_week, EXTRACT(DOW from s.sale_date)
+order by seller, EXTRACT(DOW from s.sale_date) asc;
 
 -- Customers groups by age
 select 

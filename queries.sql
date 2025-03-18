@@ -40,8 +40,8 @@ select
 from sales s
 inner join employees e on s.sales_person_id = e.employee_id
 inner join products p on s.product_id = p.product_id
-group by seller, day_of_week
-order by seller, 
+group by e.first_name, e.last_name, LOWER(TRIM(TO_CHAR(s.sale_date, 'Day')))
+order by 
          case 
              when LOWER(TRIM(TO_CHAR(s.sale_date, 'Day'))) = 'monday' then 1
              when LOWER(TRIM(TO_CHAR(s.sale_date, 'Day'))) = 'tuesday' then 2
@@ -50,7 +50,8 @@ order by seller,
              when LOWER(TRIM(TO_CHAR(s.sale_date, 'Day'))) = 'friday' then 5
              when LOWER(TRIM(TO_CHAR(s.sale_date, 'Day'))) = 'saturday' then 6
              when LOWER(TRIM(TO_CHAR(s.sale_date, 'Day'))) = 'sunday' then 7
-         END;
+         end,
+         seller;
 
 -- Customers groups by age
 select 
